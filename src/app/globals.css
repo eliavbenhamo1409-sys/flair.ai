@@ -77,8 +77,11 @@
   html[dir="rtl"] span, 
   html[dir="rtl"] a, 
   html[dir="rtl"] li, 
-  html[dir="rtl"] button {
+  html[dir="rtl"] button,
+  html[dir="rtl"] nav,
+  html[dir="rtl"] .nav-link {
     font-family: 'Heebo', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
   }
 
   html[dir="ltr"] p, 

@@ -28,12 +28,12 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.features": "מה בפנים",
     "nav.about": "הסיפור שלנו",
     "nav.faq": "שאלות ותשובות",
-    "nav.download": "להורדה",
+    "nav.download": "הורידו עכשיו",
     
     // Hero
-    "hero.badge": "יצרנו את מה שתמיד חלמנו שיהיה",
+    "hero.badge": "אפליקציית האופנה המתקדמת בעולם",
     "hero.title1": "הארון שלך.",
-    "hero.title2": "הסטייל שלך.",
+    "hero.title2": "הסטייליסט שלנו.",
     "hero.description": "סוף סוף לראות את כל מה שיש לך, ולדעת בדיוק מה ללבוש.",
     "hero.descriptionHighlight": "הארון הדיגיטלי שיעשה לך סדר.",
     "hero.downloadFree": "הורדה חינם",
@@ -133,12 +133,12 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.features": "Features",
     "nav.about": "Our Story",
     "nav.faq": "FAQ",
-    "nav.download": "Download",
+    "nav.download": "Download Now",
     
     // Hero
-    "hero.badge": "We built what we always wished existed",
+    "hero.badge": "The World's Most Advanced Fashion App",
     "hero.title1": "Your Closet.",
-    "hero.title2": "Your Style.",
+    "hero.title2": "Our Stylist.",
     "hero.description": "Finally see everything you own, and know exactly what to wear.",
     "hero.descriptionHighlight": "The digital closet that brings order to your wardrobe.",
     "hero.downloadFree": "Download Free",
