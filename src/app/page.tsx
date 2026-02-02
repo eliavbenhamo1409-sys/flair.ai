@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef, createContext, useContext } from "react";
 
 // Language Context
-type Language = "he" | "en" | "es";
+type Language = "he" | "en" | "es" | "de";
 
 interface LanguageContextType {
   language: Language;
@@ -337,6 +337,111 @@ const translations: Record<Language, Record<string, string>> = {
     "footer.privacy": "Política de privacidad",
     "footer.rights": "2026 FLAIR. Todos los derechos reservados.",
   },
+  de: {
+    // Navigation
+    "nav.howItWorks": "So funktioniert's",
+    "nav.features": "Funktionen",
+    "nav.about": "Unsere Geschichte",
+    "nav.faq": "Häufige Fragen",
+    "nav.download": "Jetzt herunterladen",
+    
+    // Hero
+    "hero.badge": "Die fortschrittlichste Mode-App der Welt",
+    "hero.title1": "Dein Kleiderschrank.",
+    "hero.title2": "Unser Stylist.",
+    "hero.description": "Endlich alles sehen, was du hast, und genau wissen, was du anziehen sollst.",
+    "hero.descriptionHighlight": "Der digitale Kleiderschrank, der Ordnung in deine Garderobe bringt.",
+    "hero.downloadFree": "Kostenlos laden",
+    "hero.appStore": "App Store",
+    "hero.googlePlay": "Google Play",
+    "hero.downloads": "+10K Downloads",
+    "hero.rating": "Bewertung",
+    "hero.lookReady": "Look fertig",
+    "hero.seconds": "3 Sekunden",
+    
+    // Features
+    "features.subtitle": "Alles an einem Ort",
+    "features.title": "Drei Tools. Null Unentschlossenheit.",
+    "features.closet.title": "Digitaler Kleiderschrank",
+    "features.closet.description": "Einmal fotografieren, für immer sehen. Jedes Teil wird organisiert, getaggt und gespeichert. Dein Kleiderschrank - überall zugänglich, organisiert, immer bei dir.",
+    "features.model.title": "Dein Model",
+    "features.model.description": "Fünf Fotos und du hast dein digitales Model. Sieh jeden Look an deinem Körper, bevor du ihn anziehst. Wie eine persönliche Umkleidekabine, jederzeit.",
+    "features.ai.title": "Dein Stylist",
+    "features.ai.description": "Schreib \"Meeting mit Kunde\" oder \"Tag zu Hause\" - erhalte Looks aus deinem Kleiderschrank, angepasst an Wetter, Anlass und Stimmung.",
+    "features.screen.closet": "Dein Kleiderschrank",
+    "features.screen.selection": "Auswahl der Teile",
+    "features.screen.look": "Look erstellen",
+    "features.screen.result": "Das Ergebnis",
+    
+    // How it works
+    "how.subtitle": "Super einfach",
+    "how.title": "Vom vollen Schrank zum perfekten Look",
+    "how.step1.title": "Fotografiere deinen Schrank",
+    "how.step1.description": "Ein Foto pro Teil. Die App erkennt, entfernt den Hintergrund, taggt und organisiert. Einmal und fertig.",
+    "how.step1.time": "15 Min",
+    "how.step2.title": "Wähle deine Teile",
+    "how.step2.description": "Wähle Kleidung aus deinem Schrank oder lass die App für dich wählen. Mischen, kombinieren, neue Kombinationen ausprobieren.",
+    "how.step2.time": "30 Sekunden",
+    "how.step3.title": "Sieh den Look an dir",
+    "how.step3.description": "Die App erstellt einen Look und zeigt ihn auf deinem Model. Gefällt nicht? Ändere ein Teil mit einem Tippen. Perfekt? Speichern und los.",
+    "how.step3.time": "20 Sekunden",
+    
+    // About
+    "about.subtitle": "Warum wir das gebaut haben",
+    "about.title": "Wir haben geschaffen, was wir uns immer gewünscht haben",
+    "about.p1": "Wir alle kennen das Gefühl: Ein Schrank voller Kleidung, aber nichts fühlt sich richtig an. Noch ein Morgen, an dem wir alles rausziehen, anprobieren, aufgeben und zu demselben langweiligen Hemd zurückkehren. Online-Shopping, das ankommt und enttäuscht. Kleidung mit Etiketten, die wir nie entfernt haben.",
+    "about.p2": "Also haben wir beschlossen, etwas anderes zu machen. Nicht noch eine App, die dich drängt, mehr und mehr zu kaufen. Sondern eine, die dir hilft zu sehen, was du schon hast - und wie du es in Looks verwandelst, die dich großartig fühlen lassen.",
+    "about.p3": "Unser Ziel ist einfach:",
+    "about.p3.highlight": " Dass du jeden Tag mit einem Lächeln das Haus verlässt, in dem Wissen, dass du genau so aussiehst, wie du wolltest.",
+    
+    // Target Audience
+    "target.subtitle": "Kommt dir bekannt vor?",
+    "target.title": "FLAIR wurde für dich gebaut, wenn...",
+    "target.1.title": "Die Zeit knapp ist",
+    "target.1.desc": "20 Minuten Unentschlossenheit? Dafür hast du keine Zeit.",
+    "target.2.title": "Voller Schrank aber...",
+    "target.2.desc": "Du immer das Gefühl hast, nichts zum Anziehen zu haben. Hast du, du musst es nur sehen.",
+    "target.3.title": "Immer die gleichen Outfits",
+    "target.3.desc": "Die gleichen 5 Teile, immer wieder. Zeit für Abwechslung.",
+    "target.4.title": "Du willst einen Stylisten",
+    "target.4.desc": "Aber 150€ pro Stunde ist nicht im Budget.",
+    "target.5.title": "Du liebst Mode",
+    "target.5.desc": "Und willst das Maximum aus jedem Teil in deinem Schrank herausholen.",
+    
+    // FAQ
+    "faq.subtitle": "Häufige Fragen",
+    "faq.title": "Hier sind die Antworten",
+    "faq.1.q": "Was macht FLAIR genau?",
+    "faq.1.a": "Kurz gesagt: Du fotografierst deine Kleidung, erstellst ein digitales Model von dir selbst und erhältst personalisierte Looks in Sekunden. Ohne etwas Neues zu kaufen.",
+    "faq.2.q": "Wie lange dauert es, den ganzen Schrank hochzuladen?",
+    "faq.2.a": "Durchschnittlicher Schrank - etwa 15 Minuten. Und du musst nicht alles auf einmal machen. Fang mit deinen Lieblingsteilen an, füge mit der Zeit hinzu. Die App funktioniert schon mit 10 Teilen.",
+    "faq.3.q": "Sieht das Model wirklich aus wie ich?",
+    "faq.3.a": "Sehr. Fünf Fotos reichen aus, um ein Model zu erstellen, das deinen Körper, Proportionen und Größe widerspiegelt. Nicht pixelgenau, aber genug, um zu sehen, wie ein Look an dir aussehen wird.",
+    "faq.4.q": "Was ist mit Datenschutz?",
+    "faq.4.a": "Deine Fotos werden verschlüsselt und sicher gespeichert. Wir verkaufen keine Daten, teilen nicht mit Dritten und verwenden deine Fotos für nichts außer der App.",
+    "faq.5.q": "Versteht die App Deutsch?",
+    "faq.5.a": "Absolut. Schreib \"etwas Bequemes fürs Homeoffice\" oder \"Look für ein Abendessen\" - sie wird genau verstehen, was du brauchst. Natürliche Sprache.",
+    "faq.6.q": "Was ist mit Android?",
+    "faq.6.a": "Wir arbeiten daran. Derzeit nur iOS. Hinterlasse deine E-Mail und wir benachrichtigen dich, wenn wir starten.",
+    
+    // CTA
+    "cta.subtitle": "Bereit für eine Veränderung?",
+    "cta.title": "Morgen früh wirst du genau wissen, was du anziehen sollst",
+    "cta.description": "7 Tage kostenlos. Keine Kreditkarte. Keine Verpflichtung. Nur du, dein Kleiderschrank und dein persönlicher Stylist.",
+    "cta.free": "7 Tage kostenlos",
+    "cta.noCard": "Keine Kreditkarte",
+    "cta.cancel": "Jederzeit kündbar",
+    
+    // Footer
+    "footer.tagline": "Dein persönlicher Stylist.",
+    "footer.tagline2": "Entscheide, was du anziehst - in Sekunden.",
+    "footer.app": "Die App",
+    "footer.company": "Unternehmen",
+    "footer.contact": "Kontakt",
+    "footer.terms": "Nutzungsbedingungen",
+    "footer.privacy": "Datenschutz",
+    "footer.rights": "2026 FLAIR. Alle Rechte vorbehalten.",
+  },
 };
 
 // Language Provider Component
@@ -374,6 +479,7 @@ const LanguageToggle = () => {
     { code: "he", label: "עברית", flag: "🇮🇱" },
     { code: "en", label: "English", flag: "🇺🇸" },
     { code: "es", label: "Español", flag: "🇪🇸" },
+    { code: "de", label: "Deutsch", flag: "🇩🇪" },
   ];
 
   const currentLang = languages.find(l => l.code === language) || languages[0];
