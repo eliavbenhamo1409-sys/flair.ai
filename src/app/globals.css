@@ -1,0 +1,402 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Assistant:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-brown: #9C8270;
+  --primary-brown-dark: #7D6A5C;
+  --primary-brown-light: #B8A596;
+  --cream: #FAF8F5;
+  --cream-dark: #F5F1EC;
+  --white: #FFFFFF;
+  --black: #1A1A1A;
+  --gray-600: #4A4A4A;
+  --gray-400: #8A8A8A;
+  --gray-200: #E5E5E5;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html[dir="rtl"] {
+    direction: rtl;
+  }
+
+  html[dir="ltr"] {
+    direction: ltr;
+  }
+
+  body {
+    @apply antialiased;
+    font-family: 'Assistant', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #FFFFFF;
+    color: var(--black);
+    overflow-x: hidden;
+    transition: font-family 0.3s ease;
+  }
+
+  html[dir="ltr"] body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* Hebrew heading font */
+  html[dir="rtl"] h1, 
+  html[dir="rtl"] h2, 
+  html[dir="rtl"] h3, 
+  html[dir="rtl"] h4, 
+  html[dir="rtl"] h5, 
+  html[dir="rtl"] h6,
+  html[dir="rtl"] .heading-font {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  /* English heading font */
+  html[dir="ltr"] h1, 
+  html[dir="ltr"] h2, 
+  html[dir="ltr"] h3, 
+  html[dir="ltr"] h4, 
+  html[dir="ltr"] h5, 
+  html[dir="ltr"] h6,
+  html[dir="ltr"] .heading-font {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  html[dir="rtl"] p, 
+  html[dir="rtl"] span, 
+  html[dir="rtl"] a, 
+  html[dir="rtl"] li, 
+  html[dir="rtl"] button {
+    font-family: 'Assistant', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  html[dir="ltr"] p, 
+  html[dir="ltr"] span, 
+  html[dir="ltr"] a, 
+  html[dir="ltr"] li, 
+  html[dir="ltr"] button {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+}
+
+/* Elegant scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFFFFF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-brown-light);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-brown);
+}
+
+/* Scroll animations - smooth and gentle */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), 
+              transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fade-in.visible {
+  opacity: 1;
+}
+
+.slide-right {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), 
+              transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slide-left {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), 
+              transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scale-in {
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), 
+              transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scale-in.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Store buttons */
+.store-btn {
+  @apply inline-flex items-center gap-3 px-6 py-3.5 rounded-xl font-medium transition-all duration-300;
+  min-width: 160px;
+}
+
+.store-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.store-btn-dark {
+  @apply bg-black text-white;
+}
+
+.store-btn-dark:hover {
+  @apply bg-gray-900;
+}
+
+.store-btn-light {
+  @apply bg-white text-[#1A1A1A];
+}
+
+.store-btn-light:hover {
+  @apply bg-gray-50;
+}
+
+/* Stagger delays */
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+
+/* Navigation styles */
+.nav-transparent {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav-solid {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Elegant underline effect */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: var(--primary-brown);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html[dir="rtl"] .nav-link::after {
+  right: 0;
+}
+
+html[dir="ltr"] .nav-link::after {
+  left: 0;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply px-8 py-4 rounded-full font-medium text-base transition-all duration-300;
+  background-color: var(--primary-brown);
+  color: var(--white);
+  box-shadow: 0 4px 20px rgba(156, 130, 112, 0.25);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-brown-dark);
+  box-shadow: 0 6px 30px rgba(156, 130, 112, 0.35);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  @apply px-8 py-4 rounded-full font-medium text-base transition-all duration-300;
+  background-color: transparent;
+  color: var(--primary-brown);
+  border: 1.5px solid var(--primary-brown);
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-brown);
+  color: var(--white);
+}
+
+/* Feature card hover */
+.feature-card {
+  @apply transition-all duration-500;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(156, 130, 112, 0.15);
+}
+
+/* Phone mockup shadow */
+.phone-shadow {
+  box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.15),
+              0 30px 60px -30px rgba(0, 0, 0, 0.2);
+}
+
+/* Gradient backgrounds */
+.bg-gradient-cream {
+  background: linear-gradient(180deg, var(--white) 0%, var(--cream) 100%);
+}
+
+.bg-gradient-brown {
+  background: linear-gradient(135deg, var(--primary-brown) 0%, var(--primary-brown-dark) 100%);
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary-brown) 0%, var(--primary-brown-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* FAQ accordion */
+.faq-item {
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+/* Comparison table */
+.comparison-check {
+  color: var(--primary-brown);
+}
+
+.comparison-x {
+  color: var(--gray-400);
+}
+
+/* App store button */
+.app-store-btn {
+  @apply inline-flex items-center gap-3 px-6 py-3 rounded-xl transition-all duration-300;
+  background: var(--black);
+  color: var(--white);
+}
+
+.app-store-btn:hover {
+  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Floating animation for hero phone */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Subtle pulse for CTA */
+@keyframes subtle-pulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(156, 130, 112, 0.25); }
+  50% { box-shadow: 0 4px 30px rgba(156, 130, 112, 0.4); }
+}
+
+.pulse-animation {
+  animation: subtle-pulse 3s ease-in-out infinite;
+}
+
+/* Mobile responsive improvements */
+@media (max-width: 640px) {
+  .store-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  h1 {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  h2 {
+    font-size: 1.75rem !important;
+  }
+  
+  .phone-shadow {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-solid,
+  .nav-transparent {
+    padding: 0 1rem;
+  }
+}
+
+/* Smooth page transitions */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better touch targets for mobile */
+@media (hover: none) {
+  .store-btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .store-btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+  
+  .feature-card:hover {
+    transform: none;
+  }
+}
