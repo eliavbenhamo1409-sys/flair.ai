@@ -276,19 +276,18 @@ const LanguageToggle = () => {
   );
 };
 
-// Scroll animation hook
-const useScrollAnimation = () => {
+// Scroll animation hook with reversible animations
+const useScrollAnimation = (threshold = 0.1) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        // Update visibility based on intersection - reversible!
+        setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      { threshold, rootMargin: "0px 0px -80px 0px" }
     );
 
     if (ref.current) {
@@ -296,12 +295,12 @@ const useScrollAnimation = () => {
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [threshold]);
 
   return { ref, isVisible };
 };
 
-// Animated section wrapper
+// Animated section wrapper with reversible animations
 const AnimatedSection = ({
   children,
   className = "",
@@ -313,7 +312,7 @@ const AnimatedSection = ({
   animation?: "fade-up" | "fade-in" | "slide-right" | "slide-left" | "scale-in";
   delay?: number;
 }) => {
-  const { ref, isVisible } = useScrollAnimation();
+  const { ref, isVisible } = useScrollAnimation(0.15);
 
   return (
     <div
@@ -675,7 +674,7 @@ const FeaturesSection = () => {
   );
 };
 
-// Step Item Component with separate animations
+// Step Item Component with scroll-based reversible animations
 const StepItem = ({ 
   step, 
   index, 
@@ -685,89 +684,124 @@ const StepItem = ({
   index: number; 
   isRTL: boolean;
 }) => {
-  const textRef = useRef<HTMLDivElement>(null);
-  const phoneRef = useRef<HTMLDivElement>(null);
-  const numberRef = useRef<HTMLSpanElement>(null);
-  const [textVisible, setTextVisible] = useState(false);
-  const [phoneVisible, setPhoneVisible] = useState(false);
-  const [numberVisible, setNumberVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const observerOptions = { threshold: 0.2, rootMargin: "0px 0px -100px 0px" };
+    // Check if mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      
+      const rect = containerRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Progress from 0 to 1 as element moves up through the viewport
+      const progress = Math.max(0, Math.min(1, (windowHeight - rect.top) / (windowHeight * 0.65)));
+      
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial check
     
-    const textObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setTextVisible(true);
-    }, observerOptions);
-    
-    const phoneObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => setPhoneVisible(true), 150);
-      }
-    }, observerOptions);
-
-    const numberObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setNumberVisible(true);
-    }, observerOptions);
-
-    if (textRef.current) textObserver.observe(textRef.current);
-    if (phoneRef.current) phoneObserver.observe(phoneRef.current);
-    if (numberRef.current) numberObserver.observe(numberRef.current);
-
     return () => {
-      textObserver.disconnect();
-      phoneObserver.disconnect();
-      numberObserver.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", checkMobile);
     };
   }, []);
 
   const isEven = index % 2 === 0;
-  const textAnimation = isRTL 
-    ? (isEven ? "step-text-left" : "step-text-right")
-    : (isEven ? "step-text-right" : "step-text-left");
-  const phoneAnimation = isRTL
-    ? (isEven ? "step-phone-right" : "step-phone-left")
-    : (isEven ? "step-phone-left" : "step-phone-right");
+  
+  // Calculate animation values based on scroll progress with easing
+  const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+  const easedProgress = easeOutCubic(scrollProgress);
+  
+  const textOpacity = easedProgress;
+  const phoneOpacity = Math.max(0, easeOutCubic(Math.max(0, scrollProgress - 0.15) / 0.85));
+  const numberScale = 0.5 + (easedProgress * 0.5);
+  
+  // Desktop: horizontal movement
+  const textTranslateX = isRTL 
+    ? (isEven ? -80 * (1 - easedProgress) : 80 * (1 - easedProgress))
+    : (isEven ? 80 * (1 - easedProgress) : -80 * (1 - easedProgress));
+  
+  const phoneTranslateX = isRTL
+    ? (isEven ? 120 * (1 - easedProgress) : -120 * (1 - easedProgress))
+    : (isEven ? -120 * (1 - easedProgress) : 120 * (1 - easedProgress));
+  
+  const phoneScale = 0.8 + (easedProgress * 0.2);
+  const phoneRotate = isRTL
+    ? (isEven ? 8 * (1 - easedProgress) : -8 * (1 - easedProgress))
+    : (isEven ? -8 * (1 - easedProgress) : 8 * (1 - easedProgress));
+
+  // Mobile: vertical movement with different values
+  const mobileTextTranslateY = 60 * (1 - easedProgress);
+  const mobilePhoneTranslateY = 80 * (1 - easedProgress);
+  const mobilePhoneScale = 0.85 + (easedProgress * 0.15);
 
   return (
-    <div className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} items-center gap-8 lg:gap-16`}>
+    <div 
+      ref={containerRef}
+      className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} items-center gap-6 sm:gap-8 lg:gap-16`}
+    >
       {/* Text Content */}
       <div 
-        ref={textRef}
-        className={`flex-1 ${textAnimation} ${textVisible ? "visible" : ""}`}
-        style={{ transitionDelay: "0ms" }}
+        className="flex-1 w-full px-2 sm:px-0"
+        style={{
+          opacity: textOpacity,
+          transform: isMobile 
+            ? `translateY(${mobileTextTranslateY}px)` 
+            : `translateX(${textTranslateX}px)`,
+          willChange: "transform, opacity"
+        }}
       >
-        <div className={`flex items-center gap-4 mb-4 ${isRTL ? "" : ""}`}>
+        <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
           <span 
-            ref={numberRef}
-            className={`text-7xl lg:text-8xl font-light text-[#9C8270]/30 heading-font step-number ${numberVisible ? "visible" : ""}`}
+            className="text-5xl sm:text-6xl lg:text-8xl font-light text-[#9C8270]/30 heading-font"
+            style={{
+              transform: `scale(${numberScale})`,
+              willChange: "transform"
+            }}
           >
             {step.number}
           </span>
           <div>
-            <h3 className="text-2xl lg:text-3xl font-semibold text-[#1A1A1A] mb-1">{step.title}</h3>
-            <span className="inline-flex items-center gap-1.5 text-sm text-[#9C8270] font-medium bg-[#9C8270]/10 px-3 py-1 rounded-full">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <h3 className="text-lg sm:text-xl lg:text-3xl font-semibold text-[#1A1A1A] mb-1">{step.title}</h3>
+            <span className="inline-flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm text-[#9C8270] font-medium bg-[#9C8270]/10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
+              <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               {step.time}
             </span>
           </div>
         </div>
-        <p className={`text-gray-600 text-lg leading-relaxed max-w-md ${isRTL ? "lg:pr-4" : "lg:pl-4"}`}>
+        <p className={`text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed max-w-md ${isRTL ? "lg:pr-4" : "lg:pl-4"}`}>
           {step.description}
         </p>
       </div>
       
       {/* Phone */}
       <div 
-        ref={phoneRef}
-        className={`flex-1 flex justify-center ${phoneAnimation} ${phoneVisible ? "visible" : ""}`}
-        style={{ transitionDelay: "100ms" }}
+        className="flex-1 flex justify-center w-full mt-4 sm:mt-6 lg:mt-0"
+        style={{
+          opacity: phoneOpacity,
+          transform: isMobile 
+            ? `translateY(${mobilePhoneTranslateY}px) scale(${mobilePhoneScale})`
+            : `translateX(${phoneTranslateX}px) scale(${phoneScale}) rotate(${phoneRotate}deg)`,
+          willChange: "transform, opacity"
+        }}
       >
-        <div className="phone-container w-52 sm:w-56 lg:w-64 rounded-[2.5rem] bg-gradient-to-br from-[#1A1A1A] to-[#2D2D2D] p-2 shadow-2xl hover:shadow-3xl transition-shadow duration-500">
-          <div className="rounded-[2rem] overflow-hidden aspect-[9/19.5] relative bg-[#1A1A1A]">
+        <div className="phone-container w-40 sm:w-48 lg:w-64 rounded-[1.75rem] sm:rounded-[2rem] lg:rounded-[2.5rem] bg-gradient-to-br from-[#1A1A1A] to-[#2D2D2D] p-1.5 sm:p-2 shadow-2xl">
+          <div className="rounded-[1.25rem] sm:rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden aspect-[9/19.5] relative bg-[#1A1A1A]">
             {/* Dynamic Island */}
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-5 bg-black rounded-full z-10"></div>
+            <div className="absolute top-1 sm:top-1.5 lg:top-2 left-1/2 -translate-x-1/2 w-12 sm:w-16 lg:w-20 h-3 sm:h-4 lg:h-5 bg-black rounded-full z-10"></div>
             {/* Screen glow effect */}
             <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/5 pointer-events-none z-[5]"></div>
             <img 
