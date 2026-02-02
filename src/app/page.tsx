@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef, createContext, useContext } from "react";
 
 // Language Context
-type Language = "he" | "en";
+type Language = "he" | "en" | "es";
 
 interface LanguageContextType {
   language: Language;
@@ -232,6 +232,111 @@ const translations: Record<Language, Record<string, string>> = {
     "footer.privacy": "Privacy Policy",
     "footer.rights": "2026 FLAIR. All rights reserved.",
   },
+  es: {
+    // Navigation
+    "nav.howItWorks": "Cómo funciona",
+    "nav.features": "Funciones",
+    "nav.about": "Nuestra historia",
+    "nav.faq": "Preguntas frecuentes",
+    "nav.download": "Descargar ahora",
+    
+    // Hero
+    "hero.badge": "La app de moda más avanzada del mundo",
+    "hero.title1": "Tu armario.",
+    "hero.title2": "Nuestro estilista.",
+    "hero.description": "Por fin ver todo lo que tienes y saber exactamente qué ponerte.",
+    "hero.descriptionHighlight": "El armario digital que pone orden en tu ropa.",
+    "hero.downloadFree": "Descarga gratis",
+    "hero.appStore": "App Store",
+    "hero.googlePlay": "Google Play",
+    "hero.downloads": "+10K Descargas",
+    "hero.rating": "Valoración",
+    "hero.lookReady": "Look listo",
+    "hero.seconds": "3 segundos",
+    
+    // Features
+    "features.subtitle": "Todo en un solo lugar",
+    "features.title": "Tres herramientas. Cero indecisión.",
+    "features.closet.title": "Armario digital",
+    "features.closet.description": "Fotografía una vez, ve para siempre. Cada prenda se organiza, etiqueta y guarda. Tu armario - accesible desde cualquier lugar, organizado, siempre contigo.",
+    "features.model.title": "Tu modelo",
+    "features.model.description": "Cinco fotos y tienes tu modelo digital. Ve cada look en tu cuerpo antes de ponértelo. Como un probador personal, a cualquier hora.",
+    "features.ai.title": "Tu estilista",
+    "features.ai.description": "Escribe \"reunión con cliente\" o \"día en casa\" - recibe looks de tu armario, adaptados al clima, evento y estado de ánimo.",
+    "features.screen.closet": "Tu armario",
+    "features.screen.selection": "Selección de prendas",
+    "features.screen.look": "Crear un look",
+    "features.screen.result": "El resultado",
+    
+    // How it works
+    "how.subtitle": "Súper sencillo",
+    "how.title": "De armario lleno a look perfecto",
+    "how.step1.title": "Fotografía tu armario",
+    "how.step1.description": "Una foto por prenda. La app identifica, elimina el fondo, etiqueta y organiza. Una vez y listo.",
+    "how.step1.time": "15 min",
+    "how.step2.title": "Selecciona tus prendas",
+    "how.step2.description": "Elige ropa de tu armario o deja que la app elija por ti. Mezcla, combina, prueba nuevas combinaciones.",
+    "how.step2.time": "30 segundos",
+    "how.step3.title": "Ve el look en ti",
+    "how.step3.description": "La app crea un look y lo muestra en tu modelo. ¿No te gusta? Cambia una prenda con un toque. ¿Perfecto? Guarda y sal.",
+    "how.step3.time": "20 segundos",
+    
+    // About
+    "about.subtitle": "Por qué lo creamos",
+    "about.title": "Creamos lo que siempre soñamos que existiera",
+    "about.p1": "Todos conocemos la sensación: un armario lleno de ropa, pero nada se siente bien. Otra mañana sacando todo, probándote cosas, rindiéndote y volviendo a esa misma camisa aburrida. Compras online que llegan y decepcionan. Ropa con etiquetas que nunca quitamos.",
+    "about.p2": "Así que decidimos hacer algo diferente. No otra app empujándote a comprar más y más. Sino una que te ayuda a ver lo que ya tienes - y cómo convertirlo en looks que te hagan sentir increíble.",
+    "about.p3": "Nuestro objetivo es simple:",
+    "about.p3.highlight": " Que salgas de casa cada día con una sonrisa, sabiendo que te ves exactamente como querías.",
+    
+    // Target Audience
+    "target.subtitle": "¿Te suena familiar?",
+    "target.title": "FLAIR fue creada para ti si...",
+    "target.1.title": "El tiempo es corto",
+    "target.1.desc": "¿20 minutos de indecisión? No tienes ese tiempo.",
+    "target.2.title": "Armario lleno pero...",
+    "target.2.desc": "Siempre sientes que no hay nada que ponerte. Lo hay, solo necesitas verlo.",
+    "target.3.title": "Atrapada en los mismos outfits",
+    "target.3.desc": "Las mismas 5 prendas, una y otra vez. Es hora de variar.",
+    "target.4.title": "Quieres un estilista",
+    "target.4.desc": "Pero 100€ la hora no está en el presupuesto.",
+    "target.5.title": "Amas la moda",
+    "target.5.desc": "Y quieres sacar el máximo de cada prenda en tu armario.",
+    
+    // FAQ
+    "faq.subtitle": "Preguntas frecuentes",
+    "faq.title": "Aquí están las respuestas",
+    "faq.1.q": "¿Qué hace exactamente FLAIR?",
+    "faq.1.a": "En resumen: fotografías tu ropa, creas un modelo digital de ti misma y recibes looks personalizados en segundos. Sin comprar nada nuevo.",
+    "faq.2.q": "¿Cuánto tiempo lleva subir todo el armario?",
+    "faq.2.a": "Armario promedio - unos 15 minutos. Y no tienes que hacerlo todo de una vez. Empieza con tus prendas favoritas, añade con el tiempo. La app funciona con solo 10 prendas.",
+    "faq.3.q": "¿El modelo realmente se parece a mí?",
+    "faq.3.a": "Mucho. Cinco fotos son suficientes para crear un modelo que refleja tu cuerpo, proporciones y altura. No es perfecto al píxel, pero suficiente para ver cómo te quedará un look.",
+    "faq.4.q": "¿Qué hay de la privacidad?",
+    "faq.4.a": "Tus fotos están encriptadas y almacenadas de forma segura. No vendemos datos, no compartimos con terceros y no usamos tus fotos para nada excepto la app.",
+    "faq.5.q": "¿La app entiende español?",
+    "faq.5.a": "Absolutamente. Escribe \"algo cómodo para trabajar desde casa\" o \"look para una cena\" - entenderá exactamente lo que necesitas. Lenguaje natural.",
+    "faq.6.q": "¿Y Android?",
+    "faq.6.a": "Estamos trabajando en ello. Por ahora solo iOS. Deja tu email y te avisaremos cuando lancemos.",
+    
+    // CTA
+    "cta.subtitle": "¿Lista para un cambio?",
+    "cta.title": "Mañana por la mañana sabrás exactamente qué ponerte",
+    "cta.description": "7 días gratis. Sin tarjeta de crédito. Sin compromiso. Solo tú, tu armario y tu estilista personal.",
+    "cta.free": "7 días gratis",
+    "cta.noCard": "Sin tarjeta de crédito",
+    "cta.cancel": "Cancela cuando quieras",
+    
+    // Footer
+    "footer.tagline": "Tu estilista personal.",
+    "footer.tagline2": "Decide qué ponerte - en segundos.",
+    "footer.app": "La App",
+    "footer.company": "Empresa",
+    "footer.contact": "Contacto",
+    "footer.terms": "Términos de uso",
+    "footer.privacy": "Política de privacidad",
+    "footer.rights": "2026 FLAIR. Todos los derechos reservados.",
+  },
 };
 
 // Language Provider Component
@@ -259,20 +364,79 @@ const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// Language Toggle Component
+// Language Toggle Component with dropdown
 const LanguageToggle = () => {
   const { language, setLanguage } = useLanguage();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const languages: { code: Language; label: string; flag: string }[] = [
+    { code: "he", label: "עברית", flag: "🇮🇱" },
+    { code: "en", label: "English", flag: "🇺🇸" },
+    { code: "es", label: "Español", flag: "🇪🇸" },
+  ];
+
+  const currentLang = languages.find(l => l.code === language) || languages[0];
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <button
-      onClick={() => setLanguage(language === "he" ? "en" : "he")}
-      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#E8E4DF] text-sm font-medium text-[#1A1A1A] hover:bg-gray-50 transition-all duration-300"
-      aria-label="Toggle language"
-    >
-      <span className={`transition-opacity ${language === "he" ? "opacity-100" : "opacity-40"}`}>עב</span>
-      <span className="text-[#9C8270]">/</span>
-      <span className={`transition-opacity ${language === "en" ? "opacity-100" : "opacity-40"}`}>EN</span>
-    </button>
+    <div ref={dropdownRef} className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E8E4DF] text-sm font-medium text-[#1A1A1A] hover:bg-gray-50 transition-all duration-300"
+        aria-label="Select language"
+      >
+        <span className="text-base">{currentLang.flag}</span>
+        <span className="hidden sm:inline">{currentLang.label}</span>
+        <svg 
+          className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      
+      {/* Dropdown */}
+      <div 
+        className={`absolute top-full mt-2 right-0 bg-white rounded-xl shadow-lg border border-[#E8E4DF] overflow-hidden transition-all duration-200 z-50 ${
+          isOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
+        }`}
+      >
+        {languages.map((lang) => (
+          <button
+            key={lang.code}
+            onClick={() => {
+              setLanguage(lang.code);
+              setIsOpen(false);
+            }}
+            className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors ${
+              language === lang.code 
+                ? "bg-[#9C8270]/10 text-[#9C8270]" 
+                : "text-[#1A1A1A] hover:bg-gray-50"
+            }`}
+          >
+            <span className="text-base">{lang.flag}</span>
+            <span>{lang.label}</span>
+            {language === lang.code && (
+              <svg className="w-4 h-4 mr-auto" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+            )}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 };
 
