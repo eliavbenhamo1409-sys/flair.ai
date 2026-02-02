@@ -675,6 +675,113 @@ const FeaturesSection = () => {
   );
 };
 
+// Step Item Component with separate animations
+const StepItem = ({ 
+  step, 
+  index, 
+  isRTL 
+}: { 
+  step: { number: string; title: string; description: string; time: string; image: string }; 
+  index: number; 
+  isRTL: boolean;
+}) => {
+  const textRef = useRef<HTMLDivElement>(null);
+  const phoneRef = useRef<HTMLDivElement>(null);
+  const numberRef = useRef<HTMLSpanElement>(null);
+  const [textVisible, setTextVisible] = useState(false);
+  const [phoneVisible, setPhoneVisible] = useState(false);
+  const [numberVisible, setNumberVisible] = useState(false);
+
+  useEffect(() => {
+    const observerOptions = { threshold: 0.2, rootMargin: "0px 0px -100px 0px" };
+    
+    const textObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setTextVisible(true);
+    }, observerOptions);
+    
+    const phoneObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => setPhoneVisible(true), 150);
+      }
+    }, observerOptions);
+
+    const numberObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setNumberVisible(true);
+    }, observerOptions);
+
+    if (textRef.current) textObserver.observe(textRef.current);
+    if (phoneRef.current) phoneObserver.observe(phoneRef.current);
+    if (numberRef.current) numberObserver.observe(numberRef.current);
+
+    return () => {
+      textObserver.disconnect();
+      phoneObserver.disconnect();
+      numberObserver.disconnect();
+    };
+  }, []);
+
+  const isEven = index % 2 === 0;
+  const textAnimation = isRTL 
+    ? (isEven ? "step-text-left" : "step-text-right")
+    : (isEven ? "step-text-right" : "step-text-left");
+  const phoneAnimation = isRTL
+    ? (isEven ? "step-phone-right" : "step-phone-left")
+    : (isEven ? "step-phone-left" : "step-phone-right");
+
+  return (
+    <div className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} items-center gap-8 lg:gap-16`}>
+      {/* Text Content */}
+      <div 
+        ref={textRef}
+        className={`flex-1 ${textAnimation} ${textVisible ? "visible" : ""}`}
+        style={{ transitionDelay: "0ms" }}
+      >
+        <div className={`flex items-center gap-4 mb-4 ${isRTL ? "" : ""}`}>
+          <span 
+            ref={numberRef}
+            className={`text-7xl lg:text-8xl font-light text-[#9C8270]/30 heading-font step-number ${numberVisible ? "visible" : ""}`}
+          >
+            {step.number}
+          </span>
+          <div>
+            <h3 className="text-2xl lg:text-3xl font-semibold text-[#1A1A1A] mb-1">{step.title}</h3>
+            <span className="inline-flex items-center gap-1.5 text-sm text-[#9C8270] font-medium bg-[#9C8270]/10 px-3 py-1 rounded-full">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {step.time}
+            </span>
+          </div>
+        </div>
+        <p className={`text-gray-600 text-lg leading-relaxed max-w-md ${isRTL ? "lg:pr-4" : "lg:pl-4"}`}>
+          {step.description}
+        </p>
+      </div>
+      
+      {/* Phone */}
+      <div 
+        ref={phoneRef}
+        className={`flex-1 flex justify-center ${phoneAnimation} ${phoneVisible ? "visible" : ""}`}
+        style={{ transitionDelay: "100ms" }}
+      >
+        <div className="phone-container w-52 sm:w-56 lg:w-64 rounded-[2.5rem] bg-gradient-to-br from-[#1A1A1A] to-[#2D2D2D] p-2 shadow-2xl hover:shadow-3xl transition-shadow duration-500">
+          <div className="rounded-[2rem] overflow-hidden aspect-[9/19.5] relative bg-[#1A1A1A]">
+            {/* Dynamic Island */}
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-5 bg-black rounded-full z-10"></div>
+            {/* Screen glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/5 pointer-events-none z-[5]"></div>
+            <img 
+              src={step.image} 
+              alt={step.title}
+              className="w-full h-full object-cover object-top"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // How It Works Section
 const HowItWorksSection = () => {
   const { t, isRTL } = useLanguage();
@@ -704,48 +811,23 @@ const HowItWorksSection = () => {
   ];
 
   return (
-    <section id="how-it-works" className="py-24 bg-white">
+    <section id="how-it-works" className="py-20 lg:py-32 bg-gradient-to-b from-white to-gray-50/50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <AnimatedSection animation="fade-up" className="text-center mb-16">
+        <AnimatedSection animation="fade-up" className="text-center mb-16 lg:mb-24">
           <p className="text-[#9C8270] font-semibold text-sm mb-3 tracking-wide">{t("how.subtitle")}</p>
-          <h2 className="text-3xl lg:text-4xl font-medium text-[#1A1A1A] heading-font">
+          <h2 className="text-3xl lg:text-5xl font-medium text-[#1A1A1A] heading-font">
             {t("how.title")}
           </h2>
         </AnimatedSection>
 
-        <div className="space-y-20">
+        <div className="space-y-20 lg:space-y-32">
           {steps.map((step, index) => (
-            <AnimatedSection
-              key={step.number}
-              animation={index % 2 === 0 ? "slide-right" : "slide-left"}
-            >
-              <div className={`flex flex-col ${index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"} items-center gap-12 lg:gap-16`}>
-                <div className="flex-1">
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="text-6xl font-light text-[#9C8270]/50 heading-font">
-                      {step.number}
-                    </span>
-                    <div>
-                      <h3 className="text-2xl font-semibold text-[#1A1A1A]">{step.title}</h3>
-                      <span className="text-sm text-[#9C8270] font-medium">{step.time}</span>
-                    </div>
-                  </div>
-                  <p className={`text-gray-600 text-lg leading-relaxed ${isRTL ? "lg:pr-12" : "lg:pl-12"}`}>{step.description}</p>
-                </div>
-                <div className="flex-1 flex justify-center">
-                  <div className="w-56 lg:w-64 rounded-[2.5rem] bg-gradient-to-br from-[#1A1A1A] to-[#2D2D2D] p-2 shadow-2xl">
-                    <div className="rounded-[2rem] overflow-hidden aspect-[9/19.5] relative bg-[#1A1A1A]">
-                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-xl z-10"></div>
-                      <img 
-                        src={step.image} 
-                        alt={step.title}
-                        className="w-full h-full object-cover object-top"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
+            <StepItem 
+              key={step.number} 
+              step={step} 
+              index={index} 
+              isRTL={isRTL} 
+            />
           ))}
         </div>
       </div>
