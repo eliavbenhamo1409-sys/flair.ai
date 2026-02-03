@@ -1371,9 +1371,7 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-white mb-4">{t("footer.contact")}</h4>
             <ul className="space-y-3">
-              <li><a href="mailto:hello@flairapp.com" className="text-gray-400 hover:text-[#9C8270] transition-colors text-sm">hello@flairapp.com</a></li>
-              <li><a href="mailto:support@flairapp.com" className="text-gray-400 hover:text-[#9C8270] transition-colors text-sm">support@flairapp.com</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-[#9C8270] transition-colors text-sm">@flair.app</a></li>
+              <li><a href="mailto:founder@flair-ai.app" className="text-gray-400 hover:text-[#9C8270] transition-colors text-sm">founder@flair-ai.app</a></li>
             </ul>
           </div>
         </div>
